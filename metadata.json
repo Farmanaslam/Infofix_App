@@ -1,0 +1,5 @@
+{
+  "name": "Copy of INFOFIX SERVICES",
+  "description": "A comprehensive, single-page CRM for INFOFIX SERVICES to manage tickets, customers, scheduling, and reports. The application is fully integrated with Supabase for data persistence and uses Google Gemini for AI-powered insights.",
+  "requestFramePermissions": []
+}

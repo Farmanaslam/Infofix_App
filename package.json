@@ -1,0 +1,36 @@
+
+{
+  "name": "infofix-services-crm",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy:frontend": "npm run build && supabase storage empty website-dist && supabase storage cp -r dist/* website-dist",
+    "deploy:functions": "supabase functions deploy frontend-server --no-verify-jwt && supabase functions deploy hyper-api",
+    "deploy": "npm run deploy:frontend && npm run deploy:functions"
+  },
+  "dependencies": {
+    "@google/genai": "^1.28.0",
+    "@hookform/resolvers": "^3.9.0",
+    "@supabase/supabase-js": "^2.78.0",
+    "@tanstack/react-query": "^5.66.0",
+    "chart.js": "^4.5.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.53.0",
+    "react-hot-toast": "^2.4.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "typescript": "^5.2.0",
+    "vite": "^5.0.0"
+  }
+}

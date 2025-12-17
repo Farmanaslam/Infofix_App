@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563EB" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>INFOFIX SERVICES</title>
+    <link rel="manifest" href="/manifest.json" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+              'twinkle': 'twinkle 3s ease-in-out infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-data': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'code-scroll': 'code-scroll 4s linear infinite',
+              'spin-slow': 'spin 8s linear infinite',
+              'float-tool': 'float-tool 5s ease-in-out infinite',
+              'scan': 'scan 3s linear infinite',
+              'blink': 'blink 1s step-end infinite',
+              'bounce-subtle': 'bounce-subtle 2s infinite',
+              'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+              'slide-up': 'slide-up 0.5s ease-out',
+              'fade-in': 'fadeIn 0.5s ease-out forwards'
+            },
+            keyframes: {
+              twinkle: {
+                '0%, 100%': { opacity: 0.2 },
+                '50%': { opacity: 1 },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              'code-scroll': {
+                  '0%': { transform: 'translateY(0)', opacity: 1 },
+                  '100%': { transform: 'translateY(10px)', opacity: 0 }
+              },
+              'float-tool': {
+                '0%, 100%': { transform: 'translate(0, 0) rotate(30deg)' },
+                '50%': { transform: 'translate(5px, -5px) rotate(35deg)' },
+              },
+              scan: {
+                '0%': { transform: 'translateY(0)', opacity: 0 },
+                '10%': { opacity: 1 },
+                '90%': { opacity: 1 },
+                '100%': { transform: 'translateY(190px)', opacity: 0 },
+              },
+              blink: {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0 },
+              },
+              'bounce-subtle': {
+                '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8,0,1,1)' },
+                '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' },
+              },
+              shake: {
+                '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+              },
+              'slide-up': {
+                '0%': { transform: 'translateY(20px)', opacity: 0 },
+                '100%': { transform: 'translateY(0)', opacity: 1 }
+              },
+              fadeIn: {
+                '0%': { opacity: 0, transform: 'translateY(10px)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react-hot-toast": "https://aistudiocdn.com/react-hot-toast@^2.6.0",
+    "@tanstack/react-query": "https://aistudiocdn.com/@tanstack/react-query@^5.90.10",
+    "chart.js": "https://aistudiocdn.com/chart.js@^4.5.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "jspdf": "https://aistudiocdn.com/jspdf@^3.0.4",
+    "jspdf-autotable": "https://aistudiocdn.com/jspdf-autotable@^5.0.2",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.84.0",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-100">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
