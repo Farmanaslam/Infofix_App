@@ -1,8 +1,16 @@
-
-
 // FIX: Removed self-import which caused declaration conflicts.
 
-export type View = 'dashboard' | 'tickets' | 'requests' | 'customers' | 'schedule' | 'reports' | 'settings' | 'portal' | 'request' | 'search';
+export type View =
+  | "dashboard"
+  | "tickets"
+  | "requests"
+  | "customers"
+  | "schedule"
+  | "reports"
+  | "settings"
+  | "portal"
+  | "request"
+  | "search";
 
 export type TicketStatus = string;
 
@@ -27,15 +35,17 @@ export interface Ticket {
   subject: string;
   status: TicketStatus;
   holdReason?: string;
+  rejectionReason?: string;
+
   priority: TicketPriority;
   assignedTo?: string;
   createdAt: string;
   resolvedAt?: string;
   device: Device;
-  chargerStatus?: 'YES' | 'NO';
+  chargerStatus?: "YES" | "NO";
   store: string;
   amountEstimate: number;
-  warranty: 'YES' | 'NO';
+  warranty: "YES" | "NO";
   billNumber?: string;
   scheduledDate?: string;
   internalProgressReason?: string;
@@ -64,10 +74,10 @@ export interface TodoTask {
   date: string; // 'YYYY-MM-DD'
   text: string;
   completed: boolean;
-  assignedTo?: string; // Name of the team member
+  assignedTo?: string|String[]; // Name of the team member
 }
 
-export type UserRole = 'ADMIN' | 'MANAGEMENT' | 'TECHNICIAN';
+export type UserRole = "ADMIN" | "MANAGEMENT" | "TECHNICIAN";
 
 export interface TeamMember {
   id: string;
@@ -82,7 +92,9 @@ export interface TeamMember {
 }
 
 // A union type for the currently logged-in user
-export type CurrentUser = (TeamMember & { type: 'team' }) | (Customer & { type: 'customer' });
+export type CurrentUser =
+  | (TeamMember & { type: "team" })
+  | (Customer & { type: "customer" });
 
 export interface AppSettings {
   id: number;
@@ -100,8 +112,8 @@ export interface AuditLogEntry {
   id: string;
   timestamp: string;
   entityId: string;
-  entityType: 'TICKET' | 'CUSTOMER' | 'NOTE';
-  action: 'CREATE' | 'UPDATE' | 'DELETE';
+  entityType: "TICKET" | "CUSTOMER" | "NOTE";
+  action: "CREATE" | "UPDATE" | "DELETE";
   user: string;
   details: string;
 }
@@ -119,7 +131,7 @@ export interface TicketFilters {
   endDate?: string;
   deviceType?: string;
   warranty?: string;
-  sortBy?: 'NEWEST' | 'OLDEST';
+  sortBy?: "NEWEST" | "OLDEST";
 }
 
 export interface DashboardStats {
@@ -128,7 +140,13 @@ export interface DashboardStats {
   resolvedToday: number;
   totalCustomers: number;
   highPriorityTickets: Ticket[]; // Top 5 high priority
-  storeStats: { [store: string]: { total: number; priorities: { [priority: string]: number } } };
+  taskAssigned: number;
+  storeStats: {
+    [store: string]: {
+      total: number;
+      priorities: { [priority: string]: number };
+    };
+  };
 }
 
 // Supabase type definitions
@@ -138,210 +156,210 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       audit_log: {
         Row: {
-          action: string
-          details: string
-          entity_id: string
-          entity_type: string
-          id: string
-          timestamp: string
-          user: string
-        }
+          action: string;
+          details: string;
+          entity_id: string;
+          entity_type: string;
+          id: string;
+          timestamp: string;
+          user: string;
+        };
         Insert: {
-          action: string
-          details: string
-          entity_id: string
-          entity_type: string
-          id: string
-          timestamp: string
-          user: string
-        }
+          action: string;
+          details: string;
+          entity_id: string;
+          entity_type: string;
+          id: string;
+          timestamp: string;
+          user: string;
+        };
         Update: {
-          action?: string
-          details?: string
-          entity_id?: string
-          entity_type?: string
-          id?: string
-          timestamp?: string
-          user?: string
-        }
-      }
+          action?: string;
+          details?: string;
+          entity_id?: string;
+          entity_type?: string;
+          id?: string;
+          timestamp?: string;
+          user?: string;
+        };
+      };
       customers: {
         Row: {
-          address: string
-          created_at: string
-          email: string
-          id: string
-          name: string
-          notes: Json | null
-          phone: string
-          photo_url: string | null
-        }
+          address: string;
+          created_at: string;
+          email: string;
+          id: string;
+          name: string;
+          notes: Json | null;
+          phone: string;
+          photo_url: string | null;
+        };
         Insert: {
-          address: string
-          created_at: string
-          email: string
-          id: string
-          name: string
-          notes?: Json | null
-          phone: string
-          photo_url?: string | null
-        }
+          address: string;
+          created_at: string;
+          email: string;
+          id: string;
+          name: string;
+          notes?: Json | null;
+          phone: string;
+          photo_url?: string | null;
+        };
         Update: {
-          address?: string
-          created_at?: string
-          email?: string
-          id?: string
-          name?: string
-          notes?: Json | null
-          phone?: string
-          photo_url?: string | null
-        }
-      }
+          address?: string;
+          created_at?: string;
+          email?: string;
+          id?: string;
+          name?: string;
+          notes?: Json | null;
+          phone?: string;
+          photo_url?: string | null;
+        };
+      };
       settings: {
         Row: {
-          hold_reasons: Json | null
-          id: number
-          past_due_days: Json | null
-          priorities: Json | null
-          statuses: Json | null
-          stores: Json | null
-          team_members: Json | null
-          device_types: Json | null
-          internal_progress_reasons: Json | null
-        }
+          hold_reasons: Json | null;
+          id: number;
+          past_due_days: Json | null;
+          priorities: Json | null;
+          statuses: Json | null;
+          stores: Json | null;
+          team_members: Json | null;
+          device_types: Json | null;
+          internal_progress_reasons: Json | null;
+        };
         Insert: {
-          hold_reasons?: Json | null
-          id?: number
-          past_due_days?: Json | null
-          priorities?: Json | null
-          statuses?: Json | null
-          stores?: Json | null
-          team_members?: Json | null
-          device_types?: Json | null
-          internal_progress_reasons?: Json | null
-        }
+          hold_reasons?: Json | null;
+          id?: number;
+          past_due_days?: Json | null;
+          priorities?: Json | null;
+          statuses?: Json | null;
+          stores?: Json | null;
+          team_members?: Json | null;
+          device_types?: Json | null;
+          internal_progress_reasons?: Json | null;
+        };
         Update: {
-          hold_reasons?: Json | null
-          id?: number
-          past_due_days?: Json | null
-          priorities?: Json | null
-          statuses?: Json | null
-          stores?: Json | null
-          team_members?: Json | null
-          device_types?: Json | null
-          internal_progress_reasons?: Json | null
-        }
-      }
+          hold_reasons?: Json | null;
+          id?: number;
+          past_due_days?: Json | null;
+          priorities?: Json | null;
+          statuses?: Json | null;
+          stores?: Json | null;
+          team_members?: Json | null;
+          device_types?: Json | null;
+          internal_progress_reasons?: Json | null;
+        };
+      };
       tasks: {
         Row: {
-          completed: boolean
-          date: string
-          id: string
-          text: string
-          assigned_to: string | null
-        }
+          completed: boolean;
+          date: string;
+          id: string;
+          text: string;
+          assigned_to: string | null;
+        };
         Insert: {
-          completed: boolean
-          date: string
-          id: string
-          text: string
-          assigned_to?: string | null
-        }
+          completed: boolean;
+          date: string;
+          id: string;
+          text: string;
+          assigned_to?: string | null;
+        };
         Update: {
-          completed?: boolean
-          date?: string
-          id?: string
-          text?: string
-          assigned_to?: string | null
-        }
-      }
+          completed?: boolean;
+          date?: string;
+          id?: string;
+          text?: string;
+          assigned_to?: string | null;
+        };
+      };
       tickets: {
         Row: {
-          amount_estimate: number
-          assigned_to: string | null
-          bill_number: string | null
-          charger_status: string | null
-          created_at: string
-          customer_id: string
-          device: Json
-          hold_reason: string | null
-          id: string
-          priority: string
-          resolved_at: string | null
-          scheduled_date: string | null
-          status: string
-          store: string
-          subject: string
-          warranty: string
-          internal_progress_reason: string | null
-          internal_progress_note: string | null
-        }
+          amount_estimate: number;
+          assigned_to: string | null;
+          bill_number: string | null;
+          charger_status: string | null;
+          created_at: string;
+          customer_id: string;
+          device: Json;
+          hold_reason: string | null;
+          id: string;
+          priority: string;
+          resolved_at: string | null;
+          scheduled_date: string | null;
+          status: string;
+          store: string;
+          subject: string;
+          warranty: string;
+          internal_progress_reason: string | null;
+          internal_progress_note: string | null;
+        };
         Insert: {
-          amount_estimate: number
-          assigned_to?: string | null
-          bill_number?: string | null
-          charger_status?: string | null
-          created_at: string
-          customer_id: string
-          device: Json
-          hold_reason?: string | null
-          id: string
-          priority: string
-          resolved_at?: string | null
-          scheduled_date?: string | null
-          status: string
-          store: string
-          subject: string
-          warranty: string
-          internal_progress_reason?: string | null
-          internal_progress_note?: string | null
-        }
+          amount_estimate: number;
+          assigned_to?: string | null;
+          bill_number?: string | null;
+          charger_status?: string | null;
+          created_at: string;
+          customer_id: string;
+          device: Json;
+          hold_reason?: string | null;
+          id: string;
+          priority: string;
+          resolved_at?: string | null;
+          scheduled_date?: string | null;
+          status: string;
+          store: string;
+          subject: string;
+          warranty: string;
+          internal_progress_reason?: string | null;
+          internal_progress_note?: string | null;
+        };
         Update: {
-          amount_estimate?: number
-          assigned_to?: string | null
-          bill_number?: string | null
-          charger_status?: string | null
-          created_at?: string
-          customer_id?: string
-          device?: Json
-          hold_reason?: string | null
-          id?: string
-          priority?: string
-          resolved_at?: string | null
-          scheduled_date?: string | null
-          status?: string
-          store?: string
-          subject?: string
-          warranty?: string
-          internal_progress_reason?: string | null
-          internal_progress_note?: string | null
-        }
-      }
-    }
+          amount_estimate?: number;
+          assigned_to?: string | null;
+          bill_number?: string | null;
+          charger_status?: string | null;
+          created_at?: string;
+          customer_id?: string;
+          device?: Json;
+          hold_reason?: string | null;
+          id?: string;
+          priority?: string;
+          resolved_at?: string | null;
+          scheduled_date?: string | null;
+          status?: string;
+          store?: string;
+          subject?: string;
+          warranty?: string;
+          internal_progress_reason?: string | null;
+          internal_progress_note?: string | null;
+        };
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
 // Interface for the PWA install prompt event
 export interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
