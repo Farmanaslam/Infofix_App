@@ -18,6 +18,15 @@ import { isSupabaseConfigured, supabase } from './lib/supabaseClient';
 import { Toaster, toast } from 'react-hot-toast';
 import { StoreProvider, useStore } from './context/StoreContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { exportTickets } from './migration/exportTicket';
+import { exportCustomers } from './migration/exportCustomer';
+
+const TEMP_ADMIN = {
+  id: "TEMP-ADMIN-001",
+  name: "System Admin",
+  email: "admin@infofix.com",
+  role: "ADMIN",
+};
 
 const SQL_SETUP_SCRIPT = `-- 1. Tables Setup
 CREATE TABLE IF NOT EXISTS customers (
@@ -161,7 +170,7 @@ ON CONFLICT (id) DO NOTHING;
 `;
 
 const AppContent: React.FC = () => {
-  const { currentUser, activeView, setActiveView, isSidebarOpen, setSidebarOpen, logout, loading, error, settings, refreshData, isRefreshing } = useStore();
+  const { currentUser,setCurrentUser, activeView, setActiveView, isSidebarOpen, setSidebarOpen, logout, loading, error, settings, refreshData, isRefreshing } = useStore();
   const [sqlCopied, setSqlCopied] = useState(false);
 
   const copySql = () => {
@@ -171,6 +180,28 @@ const AppContent: React.FC = () => {
     setTimeout(() => setSqlCopied(false), 3000);
   };
 
+
+  useEffect(() => {
+ const fetchTeamMembers = async () => {
+    if (!supabase) return;
+
+    const { data, error } = await supabase
+      .from("settings")
+      .select("team_members")
+      .eq("id", 1)
+      .single() as { data: { team_members: unknown } | null; error: unknown };
+
+    if (error) {
+      console.error("Team members fetch error:", error);
+    } else {
+      console.log("Team Members:", data?.team_members);
+
+     
+    }
+  };
+
+  fetchTeamMembers();
+  }, []);
   // Monitor Online/Offline Status
   useEffect(() => {
     const handleOnline = () => toast.success('You are back online!');
@@ -184,6 +215,7 @@ const AppContent: React.FC = () => {
         window.removeEventListener('offline', handleOffline);
     };
   }, []);
+  
 
   if (!isSupabaseConfigured || !supabase) {
     return (
